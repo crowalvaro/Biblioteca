@@ -17,8 +17,6 @@ import com.example.demo.model.Libro;
 import com.example.demo.service.ILibrosService;
 
 
-
-
 @Controller
 @RequestMapping("/libros")
 public class LibrosController {
@@ -42,7 +40,7 @@ public class LibrosController {
 	public String saveLibro(@ModelAttribute("libro") Libro libro) {
 		// save Course to database
 		librosService.saveLibro(libro);
-		return "redirect:/";
+		return "redirect:/libros";
 	}
 	
 	@GetMapping("/update/{id}")
@@ -57,7 +55,7 @@ public class LibrosController {
 	public String deleteLibro(@PathVariable (value = "id") long id) {
 
 		this.librosService.deleteLibroById(id);
-		return "redirect:/";
+		return "redirect:/libros";
 	}
 	
 	@GetMapping("/page/{pageNo}")
