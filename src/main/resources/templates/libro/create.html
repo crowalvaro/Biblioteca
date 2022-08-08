@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Añadir libro</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+		<h1>Gestion de Libros</h1>
+		<hr>
+		<h2>Añadir Libro</h2>
+
+		<form action="#" th:action="@{/save}" th:object="${libro}"
+			method="POST">
+			<input type="text" th:field="*{titulo}"
+				placeholder="Titulo del libro:" class="form-control mb-4 col-4">
+
+			<select th:field="*{tipo}">
+				<option
+					th:each="tipoOpt : ${T.(com.example.demo.model.TipoLibro).values()}"
+					th:value="${tipoOpt}" th:text="${tipoOpt}"></option>
+			</select> <input type="text" th:field="*{editorial}" placeholder="Editorial:"
+				class="form-control mb-4 col-4"> <input type="number"
+				th:field="*{anyo}" placeholder="Año" class="form-control mb-4 col-4">
+
+			<button type="submit" class="btn btn-info col-2">Guardar
+				Libro</button>
+		</form>
+
+		<hr>
+
+		<a th:href="@{/}"> Back to Course List</a>
+	</div>
+</body>
+</html>
