@@ -4,12 +4,29 @@
 <meta charset="UTF-8">
 <title>Libros</title>
 <link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
 	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
 	crossorigin="anonymous">
 </head>
 <body>
-
+		<nav class="navbar navbar-expand-lg bg-light">
+		<div class="container-fluid">
+			<a class="navbar-brand"	href="/">Biblioteca</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+				aria-controls="navbarNavAltMarkup" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+				<div class="navbar-nav">
+					<a class="nav-link" th:href="libros">Libros</a> 
+					<a class="nav-link" th:href="prestamos">Prestamos</a> 
+					<a class="nav-link" th:href="lectores">Lectores</a> 
+				</div>
+			</div>
+		</div>
+	</nav>
 	<div class="container my-2">
 		<h1>Lista de Libros</h1>
 		<a th:href="@{/libros/add}" class="btn btn-primary btn-sm mb-3">Agregar
@@ -41,7 +58,11 @@
 					<td><a th:href="@{/libros/update/{id}(id=${libro.id})}"
 						class="btn btn-primary">Actualizar</a> <a
 						th:href="@{/libros/delete/{id}(id=${libro.id})}"
-						class="btn btn-danger">Eliminar</a></td>
+						class="btn btn-danger">Eliminar</a>
+						<a
+						th:href="@{/libros/copia/{id}(id=${libro.id})}"
+						class="btn btn-warning">Crear copia</a>
+						</td>
 				</tr>
 			</tbody>
 		</table>
@@ -68,7 +89,10 @@
 				</div>
 			</div>
 
-
+	</div>
+		<a th:href="@{/}">Volver Biblioteca</a>
 		</div>
+		
+		
 </body>
 </html>

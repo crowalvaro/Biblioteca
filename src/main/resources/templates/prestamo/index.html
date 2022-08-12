@@ -9,6 +9,84 @@
 		crossorigin="anonymous">
 </head>
 <body>
+	<nav class="navbar navbar-expand-lg bg-light">
+		<div class="container-fluid">
+			<a class="navbar-brand"	href="/">Biblioteca</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+				aria-controls="navbarNavAltMarkup" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+				<div class="navbar-nav">
+					<a class="nav-link" th:href="libros">Libros</a> 
+					<a class="nav-link" th:href="prestamos">Prestamos</a> 
+					<a class="nav-link" th:href="lectores">Lectores</a> 
+				</div>
+			</div>
+		</div>
+	</nav>
+	<div class="container my-2">
+		<h1>Lista de Prestamos</h1>
+		<a th:href="@{/prestamos/add}" class="btn btn-primary btn-sm mb-3">Agregar
+			Prestamo</a>
+		<table border="1" class="table table-striped table-responsive-md">
+			<thead>
+				<tr>
+					<th><a
+						th:href="@{'/prestamos/page/' + ${currentPage} + '?sortField=lector.nombre&sortDir=' + ${reverseSortDir}}">
+							Lector</a></th>
+					<th><a
+						th:href="@{'/prestamos/page/' + ${currentPage} + '?sortField=inicio&sortDir=' + ${reverseSortDir}}">
+							Fecha inicio</a></th>
+					<th><a
+						th:href="@{'/prestamos/page/' + ${currentPage} + '?sortField=fin&sortDir=' + ${reverseSortDir}}">
+							Fecha fin</a></th>
+					<th><a
+						th:href="@{'/prestamos/page/' + ${currentPage} + '?sortField=copia.libroCopia.titulo&sortDir=' + ${reverseSortDir}}">
+							Copia prestada</a></th>		
+					<th>Operaciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="prestamo: ${listPrestamos}">
+					<td th:text="${prestamo.lector.nombre}"></td>
+					<td th:text="${prestamo.inicio}"></td>
+					<td th:text="${prestamo.fin}"></td>
+					<td th:text="${prestamo.copia.libroCopia.titulo}"></td>
+					<td><a th:href="@{/prestamos/update/{id}(id=${prestamo.id})}"
+						class="btn btn-primary">Actualizar</a> <a
+						th:href="@{/prestamos/delete/{id}(id=${prestamo.id})}"
+						class="btn btn-danger">Eliminar</a></td>
+				</tr>
+			</tbody>
+		</table>
 
+		<div th:if="${totalPages >1}">
+			<div class="row col-sm-10">
+				<div class="col-sm-5">Total Rows: [[${totalItems}]]</div>
+				<div class="col-sm-3">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}"> <a
+						th:if="${currentPage != i}"
+						th:href="@{'/prestamos/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+						<span th:unless="${currentPage != i}">[[${i}]]</span>
+					</span>
+				</div>
+				<div class="col-sm-1">
+					<a th:if="${currentPage < totalPages}"
+						th:href="@{'/prestamos/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+					<span th:unless="${currentPage < totalPages}">Proximo</span>
+				</div>
+				<div class="col-sm-1">
+					<a th:if="${currentPage < totalPages}"
+						th:href="@{'/prestamos/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+					<span th:unless="${currentPage < totalPages}">Utlimo</span>
+				</div>
+			</div>
+
+	</div>
+		<a th:href="@{/}">Volver Biblioteca</a>
+		</div>
 </body>
 </html>

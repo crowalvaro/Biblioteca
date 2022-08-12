@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.model.Copia;
+import com.example.demo.model.CopiaAux;
 import com.example.demo.model.Libro;
+import com.example.demo.service.ICopiasService;
 import com.example.demo.service.ILibrosService;
 
 
@@ -23,6 +26,8 @@ public class LibrosController {
 	
 	@Autowired
 	ILibrosService librosService;
+	@Autowired
+	ICopiasService copiasService;
 	
 	@GetMapping("")
 	public String crudLibros(Model model) {
@@ -40,6 +45,7 @@ public class LibrosController {
 	public String saveLibro(@ModelAttribute("libro") Libro libro) {
 		// save Course to database
 		librosService.saveLibro(libro);
+		
 		return "redirect:/libros";
 	}
 	
@@ -57,6 +63,37 @@ public class LibrosController {
 		this.librosService.deleteLibroById(id);
 		return "redirect:/libros";
 	}
+	
+	@GetMapping("/copia/{id}")
+	public String indexCopiaLibro(@PathVariable (value = "id") long id, Model model) {
+		
+		
+		//model.addAttribute("copia",new CopiaAux());
+		model.addAttribute("libro", librosService.getLibroById(id));
+		CopiaAux copia = new CopiaAux();
+		copia.setIdLibro(id); 
+		model.addAttribute("copia",copia);
+		
+		return "libro/copia";
+	}
+	
+	@PostMapping("/save/copiaLibro")
+	public String saveCopiaLibro(@ModelAttribute("copia") CopiaAux copiaAux) {
+		
+		Libro libro = librosService.getLibroById(copiaAux.getIdLibro());
+		
+		Copia copia = new Copia();
+		
+		copia.setLibroCopia(libro);
+		copia.setEstado(copiaAux.getEstado());
+		
+		copiasService.saveCopia(copia);
+		
+		return "redirect:/libros";
+	}
+	
+	
+	
 	
 	@GetMapping("/page/{pageNo}")
 	public String findPaginated(@PathVariable (value = "pageNo") int pageNo,

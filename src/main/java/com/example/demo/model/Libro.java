@@ -32,7 +32,7 @@ public class Libro implements Serializable{
 	
 	private int anyo;
 	
-	@OneToMany(mappedBy = "libroCopia", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "libroCopia",cascade = CascadeType.ALL)
 	private List<Copia> copias;
 	
 	/**

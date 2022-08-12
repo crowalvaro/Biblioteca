@@ -9,12 +9,14 @@
 	crossorigin="anonymous">
 </head>
 <body>
+
 	<div>
-		<h1>Gestion de Cursos</h1>
-		<h2>Actulizacion de Curso</h2>
+		<h1>Gestion de Libros</h1>
+		<h2>Actulizacion de Libro</h2>
 		<form action="#" th:action="@{/libros/save}" th:object="${libro}"
 			method="post">
-			<input type="hidden" th:field="*{id}"> <input type="text"
+			<input type="hidden" th:field="*{id}"> 
+			<input type="text"
 				th:field="*{titulo}" class="form-control mb-4 col-4"
 				placeholder="Titulo"> 
 				<select th:field="*{tipo}">
@@ -30,7 +32,7 @@
 			<button type="submit" class="btn btn-info col-2">Guardar</button>
 		</form>
 		<hr>
-		<a th:href="@{/}">Volver al listado</a>
+		<a th:href="@{/libros}">Volver al listado</a>
 	</div>
 </body>
 </html>

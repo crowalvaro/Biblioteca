@@ -1,13 +1,23 @@
 package com.example.demo.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="Lector")
@@ -26,11 +36,23 @@ public class Lector implements Serializable {
 	private String telefono;
 	private String direccion;
 	
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "lector_id")
+	private List<Prestamo> prestamos;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate multado;
 	
 	/**
 	 * Métodos
 	 */
-	
+	public void multar(Long dias) {
+		
+		LocalDate hoy = LocalDate.now();
+		this.multado=hoy.plusDays(dias);
+		
+	}
 	
 	
 	/**
@@ -61,6 +83,13 @@ public class Lector implements Serializable {
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
+	public List<Prestamo> getPrestamos() {
+		return prestamos;
+	}
+	public void setPrestamos(List<Prestamo> prestamos) {
+		this.prestamos = prestamos;
+	}
+
 	
 	
 	

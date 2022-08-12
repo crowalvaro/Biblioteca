@@ -30,10 +30,10 @@ public class LibrosSevice implements ILibrosService{
 
 	@Override
 	public Libro getLibroById(long id) {
-		Optional<Libro> optionalCourse = librosDao.findById(id);
+		Optional<Libro> optionalLibro = librosDao.findById(id);
 		Libro libro = null;
-		if (optionalCourse.isPresent()) {
-			libro = optionalCourse.get();
+		if (optionalLibro.isPresent()) {
+			libro = optionalLibro.get();
 		} else {
 			throw new RuntimeException("Libro no encontrado por id : " + id);
 		}

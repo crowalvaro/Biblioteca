@@ -1,14 +1,90 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="ISO-8859-1">
-	<title>Lector</title>
-	<link rel="stylesheet"
-		href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-		integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-		crossorigin="anonymous">
+<meta charset="UTF-8">
+<title>Lector</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
 </head>
 <body>
+	<nav class="navbar navbar-expand-lg bg-light">
+		<div class="container-fluid">
+			<a class="navbar-brand"	href="/">Biblioteca</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+				aria-controls="navbarNavAltMarkup" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+				<div class="navbar-nav">
+					<a class="nav-link" th:href="libros">Libros</a> 
+					<a class="nav-link" th:href="prestamos">Prestamos</a> 
+					<a class="nav-link" th:href="lectores">Lectores</a> 
+				</div>
+			</div>
+		</div>
+	</nav>
+	<div class="container my-2">
+		<h1>Lista de lectores</h1>
+		<a th:href="@{/lectores/add}" class="btn btn-primary btn-sm mb-3">Agregar
+			Lector</a>
+		<table border="1" class="table table-striped table-responsive-md">
+			<thead>
+				<tr>
+					<th><a
+						th:href="@{'/lectores/page/' + ${currentPage} + '?sortField=nombre&sortDir=' + ${reverseSortDir}}">
+							Nombre</a></th>
+					<th><a
+						th:href="@{'/lectores/page/' + ${currentPage} + '?sortField=telefono&sortDir=' + ${reverseSortDir}}">
+							Telefono</a></th>
+					<th><a
+						th:href="@{'/lectores/page/' + ${currentPage} + '?sortField=direccion&sortDir=' + ${reverseSortDir}}">
+							Direccion</a></th>
 
+					<th>Operaciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="lector: ${listLectores}">
+					<td th:text="${lector.nombre}"></td>
+					<td th:text="${lector.telefono}"></td>
+					<td th:text="${lector.direccion}"></td>
+					<td><a th:href="@{/lectores/update/{id}(id=${lector.id})}"
+						class="btn btn-primary">Actualizar</a> <a
+						th:href="@{/lectores/delete/{id}(id=${lector.id})}"
+						class="btn btn-danger">Eliminar</a></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div th:if="${totalPages >1}">
+			<div class="row col-sm-10">
+				<div class="col-sm-5">Total Rows: [[${totalItems}]]</div>
+				<div class="col-sm-3">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}"> <a
+						th:if="${currentPage != i}"
+						th:href="@{'/lectores/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+						<span th:unless="${currentPage != i}">[[${i}]]</span>
+					</span>
+				</div>
+				<div class="col-sm-1">
+					<a th:if="${currentPage < totalPages}"
+						th:href="@{'/lectores/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+					<span th:unless="${currentPage < totalPages}">Proximo</span>
+				</div>
+				<div class="col-sm-1">
+					<a th:if="${currentPage < totalPages}"
+						th:href="@{'/lectores/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+					<span th:unless="${currentPage < totalPages}">Utlimo</span>
+				</div>
+			</div>
+		</div>
+		<a th:href="@{/}">Volver Biblioteca</a>
+	</div>
+	
+		
 </body>
 </html>

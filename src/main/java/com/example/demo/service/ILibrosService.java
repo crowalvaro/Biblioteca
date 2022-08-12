@@ -7,8 +7,7 @@ import org.springframework.data.domain.Page;
 import com.example.demo.model.Libro;
 
 public interface ILibrosService {
-
-
+	
 	Libro getLibroById(long id);
 
 	void saveLibro(Libro libro);
