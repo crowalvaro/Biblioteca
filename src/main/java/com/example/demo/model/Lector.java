@@ -48,9 +48,8 @@ public class Lector implements Serializable {
 	 * Métodos
 	 */
 	public void multar(Long dias) {
-		
 		LocalDate hoy = LocalDate.now();
-		this.multado=hoy.plusDays(dias);
+		this.multado=hoy.plusDays(dias*2);
 		
 	}
 	
@@ -88,6 +87,14 @@ public class Lector implements Serializable {
 	}
 	public void setPrestamos(List<Prestamo> prestamos) {
 		this.prestamos = prestamos;
+	}
+
+	public LocalDate getMultado() {
+		return multado;
+	}
+	//Para desmultar poner a null
+	public void setMultado(LocalDate multado) {
+		this.multado = multado;
 	}
 
 	

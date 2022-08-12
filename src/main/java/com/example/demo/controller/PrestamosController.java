@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,7 @@ public class PrestamosController {
 	}
 
 	@PostMapping("/save")
-	public String savePrestamo(@ModelAttribute("prestamo") PrestamoAux prestamoAux) {
+	public String savePrestamo(@ModelAttribute("prestamo") PrestamoAux prestamoAux,Model model) {
 	
 		
 		Copia copia = copiasService.getCopiaById(prestamoAux.getIdCopia());
@@ -63,7 +64,23 @@ public class PrestamosController {
 		prestamo.setInicio(prestamoAux.getInicio());
 		prestamo.setFin(prestamoAux.getFin());
 	
-		prestamosService.savePrestamo(prestamo);
+		try {
+			prestamosService.savePrestamo(prestamo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			PrestamoAux prestamo2 = new PrestamoAux();
+			List<Copia> listaCopias = copiasService.getAllCopias();
+			model.addAttribute("prestamo", prestamo2);
+			model.addAttribute("listaLectores", lectoresService.getAllLectores() );
+			model.addAttribute("listaCopias", listaCopias);
+			
+			List<String> errores = new  ArrayList<String>();
+			errores.add(e.getMessage());
+			
+			model.addAttribute("errores",errores);
+			return "prestamo/create";
+			
+		}
 		return "redirect:/prestamos";
 	}
 	

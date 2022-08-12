@@ -26,15 +26,17 @@ public class PrestamosService implements IPrestamosService{
 
 	
 	@Override
-	public void savePrestamo(Prestamo prestamo) {
+	public void savePrestamo(Prestamo prestamo) throws Exception {
 		
 		if(this.prestamosDao.numeroPrestamosLector(prestamo.getLector()).isPresent()) {
 			Integer numeroPrestamos = this.prestamosDao.numeroPrestamosLector(prestamo.getLector()).get();
 			
 			if(numeroPrestamos<3) {
 				this.prestamosDao.save(prestamo);
+			}else {
+				//Aqui deveria devolver error o no hacer nada ya que es cuando sea mayor que 3
+				throw new Exception("El lector ya tiene 3 prestamos");
 			}
-			//Aqui deveria devolver error o no hacer nada ya que es cuando sea mayor que 3
 			
 		}else {
 			this.prestamosDao.save(prestamo);

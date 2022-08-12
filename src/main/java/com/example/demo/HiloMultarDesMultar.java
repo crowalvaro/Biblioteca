@@ -36,9 +36,9 @@ public class HiloMultarDesMultar extends Thread {
 				  	TimeUnit time = TimeUnit.DAYS; 
 			        long diasDiferencia = time.convert(diff, TimeUnit.MILLISECONDS);
 	
-			        
 				if(diasDiferencia>30) {
-					prestamo.getLector();
+					Long diasAcm = diasDiferencia-30;
+					prestamo.getLector().multar(diasAcm);
 				}
 				return prestamo;
 			});
